@@ -18,6 +18,17 @@ maxnSines = 150
 mX, pX = STFT.stftAnal(x, w, N, H)
 tfreq, tmag, tphase = SM.sineModelAnal(x, fs, w, N, H, t, maxnSines, minSineDur)
 
+print(mX.shape)
+peaks = np.zeros_like(mX)
+for i in range(mX.shape[0]):
+    ploc = UF.peakDetection(mX[i], t)
+    peaks[i, ploc] = 1
+print(peaks.sum())
+
+# for i in range(100):
+#     print(peaks[i].nonzero())
+print(peaks.shape)
+
 plt.figure(1, figsize=(9.5, 5))
 maxplotfreq = 5000.0
 maxplotbin = int(N*maxplotfreq/fs)
